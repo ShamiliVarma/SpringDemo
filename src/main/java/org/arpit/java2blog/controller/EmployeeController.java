@@ -31,20 +31,24 @@ public class EmployeeController {
 	@RequestMapping(value = "/employees/{id}", method = RequestMethod.GET )
 	public Employee getEmployee(@PathVariable int id){
 		System.out.println("In EmployeeController :: getEmployee");
-		System.out.println("getHeaderNames "+httpServlet.getHeaderNames().toString());
-		System.out.println("getContextPath "+httpServlet.getContextPath());
-		System.out.println("getHeader "+httpServlet.getHeader("userName"));
-		System.out.println("getIntHeader "+httpServlet.getIntHeader("UserKey"));
-		System.out.println("getMethod "+httpServlet.getMethod());
-		System.out.println("getPathlnfo "+httpServlet.getPathInfo());
-		System.out.println("getpathTranslated "+httpServlet.getPathTranslated());
-		System.out.println("getQueryString "+httpServlet.getQueryString());
-		System.out.println("getRequestedSessionld "+httpServlet.getRequestedSessionId());
-		System.out.println("getRequestURI "+httpServlet.getRequestURI());
-		System.out.println("getRequestURL "+httpServlet.getRequestURL());
-		System.out.println("getServletpath "+httpServlet.getServletPath());
-		System.out.println("isRequestedSessionldFromCookie "+httpServlet.isRequestedSessionIdFromCookie());
-		System.out.println("isRequestedSessionldValid "+httpServlet.isRequestedSessionIdValid());
+		/*
+		 * System.out.println("getHeaderNames "+httpServlet.getHeaderNames().toString())
+		 * ; System.out.println("getContextPath "+httpServlet.getContextPath());
+		 * System.out.println("getHeader "+httpServlet.getHeader("userName"));
+		 * System.out.println("getIntHeader "+httpServlet.getIntHeader("UserKey"));
+		 * System.out.println("getMethod "+httpServlet.getMethod());
+		 * System.out.println("getPathlnfo "+httpServlet.getPathInfo());
+		 * System.out.println("getpathTranslated "+httpServlet.getPathTranslated());
+		 * System.out.println("getQueryString "+httpServlet.getQueryString());
+		 * System.out.println("getRequestedSessionld "+httpServlet.getRequestedSessionId
+		 * ()); System.out.println("getRequestURI "+httpServlet.getRequestURI());
+		 * System.out.println("getRequestURL "+httpServlet.getRequestURL());
+		 * System.out.println("getServletpath "+httpServlet.getServletPath());
+		 * System.out.println("isRequestedSessionldFromCookie "+httpServlet.
+		 * isRequestedSessionIdFromCookie());
+		 * System.out.println("isRequestedSessionldValid "+httpServlet.
+		 * isRequestedSessionIdValid());
+		 */
 		return empService.getEmployee(id);
 	}
 	

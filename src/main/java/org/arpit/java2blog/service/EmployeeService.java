@@ -15,27 +15,25 @@ public class EmployeeService {
 	
 	
 	public List<Employee> getEmployeeList(){
-		return empDAO.getAllEmployees();
-	
-		
+		return empDAO.getAllEmployeesfromDB();		
 	}
 	
 	public Employee getEmployee(int id) {
-		return empDAO.getEmployee(id);
+		return empDAO.getEmployeebyIdfromDB(id);
 	}
 	
 	public int addEmployee(Employee emp) {
-		return empDAO.addEmployee(emp);
+		return empDAO.insertData(emp);
 	}
 
 	
 	public int editEmployee(Employee emp) {
-		return empDAO.editEmployee(emp);
+		return empDAO.updateData(emp);
 	}
 
 	
 	public int deleteEmployee(Employee emp) {
-		return empDAO.deleteEmployee(emp);
+		return empDAO.deleteData(emp);
 	}
 
 
