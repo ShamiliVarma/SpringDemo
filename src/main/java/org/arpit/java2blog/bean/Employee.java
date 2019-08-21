@@ -6,6 +6,7 @@ public class Employee {
 	private int empId;
 	private String firstName;
 	private String lastName;
+	private EmployeeAddress employeeAddress;
 	
 	public Employee() {
 		super();
@@ -35,6 +36,14 @@ public class Employee {
 	}
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
+	}
+
+	public EmployeeAddress getEmployeeAddress() {
+		return employeeAddress;
+	}
+
+	public void setEmployeeAddress(EmployeeAddress employeeAddress) {
+		this.employeeAddress = employeeAddress;
 	}
 	
 	

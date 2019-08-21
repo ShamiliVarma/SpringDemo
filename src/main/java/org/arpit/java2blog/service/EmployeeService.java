@@ -15,25 +15,35 @@ public class EmployeeService {
 	
 	
 	public List<Employee> getEmployeeList(){
-		return empDAO.getAllEmployeesfromDB();		
+		//Using Select Statement and Rowmapper
+		//return empDAO.getAllEmployeesfromDB();
+		//Using Select Statement and ResultSet
+		//return empDAO.getAllEmployeesfromDBRS();
+		return empDAO.getAllEmployeesAndAddressfromDB();
+		
 	}
 	
 	public Employee getEmployee(int id) {
-		return empDAO.getEmployeebyIdfromDB(id);
+		//return empDAO.getEmployeebyIdfromDB(id);
+		//return empDAO.getEmpbyIdPrepStmnt(id);
+		return empDAO.getEmployeesAndAddressbyIdfromDB(id);
 	}
 	
 	public int addEmployee(Employee emp) {
-		return empDAO.insertData(emp);
+		//return empDAO.insertData(emp);
+		return empDAO.insertEmployeesAndAddress(emp);
 	}
 
 	
 	public int editEmployee(Employee emp) {
-		return empDAO.updateData(emp);
+		//return empDAO.updateData(emp);
+		return empDAO.updateEmployeesAndAddress(emp);
 	}
 
 	
 	public int deleteEmployee(Employee emp) {
-		return empDAO.deleteData(emp);
+		//return empDAO.deleteData(emp);
+		return empDAO.deleteEmployeesAndAddress(emp);
 	}
 
 

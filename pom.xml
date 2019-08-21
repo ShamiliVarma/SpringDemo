@@ -61,6 +61,7 @@
 			<version>${spring.version}</version>
 		</dependency>
 
+		<!-- H2 Database dependencies  -->
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>

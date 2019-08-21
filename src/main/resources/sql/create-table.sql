@@ -5,3 +5,11 @@ CREATE TABLE Employees (
   email varchar(100) NOT NULL,
   PRIMARY KEY (id)
 );
+CREATE TABLE EmployeeAddress (
+  id int(10) NOT NULL,
+  county varchar(30) NOT NULL,
+  city varchar(30) NOT NULL,
+  state varchar(30) NOT NULL,
+  PRIMARY KEY (id),
+  FOREIGN KEY (id) REFERENCES Employees(id)
+);
