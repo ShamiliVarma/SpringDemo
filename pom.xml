@@ -67,6 +67,30 @@
 			<artifactId>h2</artifactId>
 			<version>1.4.196</version>
 		</dependency>
+		
+		
+		<!-- Log4j -->
+		
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>${log4j.version}</version>
+		</dependency>
+		 
+		 
+		 <!--Spring security  -->
+		 <dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-web</artifactId>
+			<version>${spring.security.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-config</artifactId>
+			<version>${spring.security.version}</version>
+		</dependency>
+
         
         
  </dependencies>
@@ -99,6 +123,8 @@
   <spring.version>4.2.1.RELEASE</spring.version>
   <jdk.version>1.7</jdk.version>
   <aspectj.version>1.7.4</aspectj.version>
+  <spring.security.version>4.0.1.RELEASE</spring.security.version>
+  <log4j.version>1.2.17</log4j.version>
  </properties>
   
 </project>
