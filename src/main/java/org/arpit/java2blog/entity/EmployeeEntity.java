@@ -1,12 +1,12 @@
 package org.arpit.java2blog.entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
-
-import org.arpit.java2blog.bean.EmployeeAddress;
 
 @Entity
 @Table(name = "Employees")
@@ -25,6 +25,18 @@ public class EmployeeEntity {
 	@Column(name = "email")
 	private String email;
 	
+	
+	@OneToOne(mappedBy = "empEnitity", cascade = CascadeType.ALL)
+	private EmpAddressEntity addressEntity;
+	
+	public EmpAddressEntity getAddressEntity() {
+		return addressEntity;
+	}
+
+	public void setAddressEntity(EmpAddressEntity addressEntity) {
+		this.addressEntity = addressEntity;
+	}
+
 	public EmployeeEntity() {
 		super();
 	}

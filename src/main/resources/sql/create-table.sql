@@ -6,12 +6,13 @@ CREATE TABLE Employees (
   PRIMARY KEY (id)
 );
 CREATE TABLE EmployeeAddress (
-  id int(10) NOT NULL,
+  id int(10) NOT NULL AUTO_INCREMENT,
+  empid int(10) NOT NULL,
   county varchar(30) NOT NULL,
   city varchar(30) NOT NULL,
   state varchar(30) NOT NULL,
   PRIMARY KEY (id),
-  FOREIGN KEY (id) REFERENCES Employees(id)
+  FOREIGN KEY (empid) REFERENCES Employees(id)
 );
 CREATE TABLE USERS (
   id int(10) NOT NULL AUTO_INCREMENT,

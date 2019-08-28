@@ -35,6 +35,7 @@
 		<property name="annotatedClasses">
 			<list>
 				<value>org.arpit.java2blog.entity.EmployeeEntity</value>
+				<value>org.arpit.java2blog.entity.EmpAddressEntity</value>
 			</list>
 		</property>
 		<property name="hibernateProperties">
@@ -52,4 +53,9 @@
 		<property name="sessionFactory" ref="sessionFactory"></property>
 	</bean>
 	<tx:annotation-driven transaction-manager="txManager" />
+	
+	<!-- Custom Authentication -->
+<bean id="customAuthentication" class="org.arpit.java2blog.auth.CustomAuthentication"></bean>
+	
+	
 </beans>

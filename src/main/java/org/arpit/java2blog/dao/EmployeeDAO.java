@@ -9,6 +9,8 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.arpit.java2blog.bean.Employee;
+import org.arpit.java2blog.bean.EmployeeAddress;
+import org.arpit.java2blog.entity.EmpAddressEntity;
 import org.arpit.java2blog.entity.EmployeeEntity;
 import org.arpit.java2blog.mapper.EmployeeMapper;
 import org.arpit.java2blog.mapper.EmployeeResultSet;
@@ -314,6 +316,12 @@ public class EmployeeDAO implements UserDetailsService {
 		employee.setEmpId(emp.getEmpId());
 		employee.setFirstName(emp.getFirstName());
 		employee.setLastName(emp.getLastName());
+		
+		 EmployeeAddress employeeAddress = new EmployeeAddress();
+		 employeeAddress.setCounty(emp.getAddressEntity().getCounty());
+		 employeeAddress.setCity(emp.getAddressEntity().getCity());
+		 employeeAddress.setState(emp.getAddressEntity().getState());
+		employee.setEmployeeAddress(employeeAddress);
 
 		System.out.println(employee.toString());
 		return employee;
@@ -328,6 +336,14 @@ public class EmployeeDAO implements UserDetailsService {
 		empEntity.setFirstName(emp.getFirstName());
 		empEntity.setLastName(emp.getLastName());
 		empEntity.setEmail(emp.getFirstName()+"@abc.com");
+		
+		EmpAddressEntity empAdd = new EmpAddressEntity();
+		empAdd.setCity(emp.getEmployeeAddress().getCity());
+		empAdd.setCounty(emp.getEmployeeAddress().getCounty());
+		empAdd.setState(emp.getEmployeeAddress().getState());
+		empAdd.setEmpEnitity(empEntity);
+		
+		empEntity.setAddressEntity(empAdd);
 		
 		int empId = (int) session.save(empEntity);
 		
