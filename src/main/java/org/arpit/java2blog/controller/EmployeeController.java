@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.log4j.Logger;
 import org.arpit.java2blog.bean.Employee;
 import org.arpit.java2blog.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +23,11 @@ public class EmployeeController {
 	@Autowired
 	HttpServletRequest httpServlet;
 	
+	private static Logger log = Logger.getLogger(EmployeeController.class);
+	
 	@RequestMapping(value = "/employees", method = RequestMethod.GET)
 	public List<Employee> getEmployeeList(){
+		log.info("In EmployeeController :: getEmployeeList");
 		System.out.println("In EmployeeController :: getEmployeeList");
 		return empService.getEmployeeList();
 	}
@@ -50,6 +54,13 @@ public class EmployeeController {
 		 * isRequestedSessionIdValid());
 		 */
 		return empService.getEmployee(id);
+	}
+	
+	@RequestMapping(value = "/employeeSearch/{startsWith}", method = RequestMethod.GET)
+	public List<Employee> getEmployeesBySearch(@PathVariable String startsWith){
+		log.info("In EmployeeController :: getEmployeeList");
+		System.out.println("In EmployeeController :: getEmployeeList");
+		return empService.getEmployeesBySearch(startsWith);
 	}
 	
 	@RequestMapping(value = "/employees", method = RequestMethod.POST)
