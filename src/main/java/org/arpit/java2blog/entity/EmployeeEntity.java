@@ -12,6 +12,12 @@ import javax.persistence.Table;
 @Table(name = "Employees")
 public class EmployeeEntity {
 
+	@Override
+	public String toString() {
+		return "EmployeeEntity [empId=" + empId + ", firstName=" + firstName + ", lastName=" + lastName + ", email="
+				+ email + ", addressEntity=" + addressEntity.toString() + "]";
+	}
+
 	@Id @GeneratedValue
 	@Column(name = "id")
 	private int empId;

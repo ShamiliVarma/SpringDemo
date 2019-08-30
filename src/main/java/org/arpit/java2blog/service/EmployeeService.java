@@ -40,7 +40,7 @@ public class EmployeeService {
 	@Transactional
 	public int editEmployee(Employee emp) {
 		//return empDAO.updateData(emp);
-		return empDAO.updateEmployeesAndAddress(emp);
+		return empDAO.changeEmpAndAddress(emp);
 	}
 
 	@Transactional

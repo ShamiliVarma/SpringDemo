@@ -15,6 +15,7 @@ import org.arpit.java2blog.entity.EmployeeEntity;
 import org.arpit.java2blog.mapper.EmployeeMapper;
 import org.arpit.java2blog.mapper.EmployeeResultSet;
 import org.hibernate.Criteria;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
@@ -296,17 +297,25 @@ public class EmployeeDAO implements UserDetailsService {
 		List<EmployeeEntity> employees = session.createQuery("FROM EmployeeEntity").list();
 
 		List<Employee> employeeList = new ArrayList<Employee>();
-		for(EmployeeEntity emp: employees) {
+		for (EmployeeEntity emp : employees) {
 			Employee employee = new Employee();
 			employee.setEmpId(emp.getEmpId());
 			employee.setFirstName(emp.getFirstName());
 			employee.setLastName(emp.getLastName());
+
+			EmployeeAddress employeeAddress = new EmployeeAddress();
+			employeeAddress.setCounty(emp.getAddressEntity().getCounty());
+			employeeAddress.setCity(emp.getAddressEntity().getCity());
+			employeeAddress.setState(emp.getAddressEntity().getState());
+			employee.setEmployeeAddress(employeeAddress);
+
 			employeeList.add(employee);
+
+			System.out.println(employee.toString());
 		}
 		return employeeList;
 	}
-	
-	
+
 	public Employee getEmployeebyIdfromDB(int id) {
 
 		Session session = sessionFactory.getCurrentSession();
@@ -316,65 +325,80 @@ public class EmployeeDAO implements UserDetailsService {
 		employee.setEmpId(emp.getEmpId());
 		employee.setFirstName(emp.getFirstName());
 		employee.setLastName(emp.getLastName());
-		
-		 EmployeeAddress employeeAddress = new EmployeeAddress();
-		 employeeAddress.setCounty(emp.getAddressEntity().getCounty());
-		 employeeAddress.setCity(emp.getAddressEntity().getCity());
-		 employeeAddress.setState(emp.getAddressEntity().getState());
+
+		EmployeeAddress employeeAddress = new EmployeeAddress();
+		employeeAddress.setCounty(emp.getAddressEntity().getCounty());
+		employeeAddress.setCity(emp.getAddressEntity().getCity());
+		employeeAddress.setState(emp.getAddressEntity().getState());
 		employee.setEmployeeAddress(employeeAddress);
 
 		System.out.println(employee.toString());
 		return employee;
 
 	}
-	
+
 	public int insertEmployeesAndAddress(Employee emp) {
-		
+
 		Session session = sessionFactory.getCurrentSession();
 		EmployeeEntity empEntity = new EmployeeEntity();
-		
+
 		empEntity.setFirstName(emp.getFirstName());
 		empEntity.setLastName(emp.getLastName());
-		empEntity.setEmail(emp.getFirstName()+"@abc.com");
-		
+		empEntity.setEmail(emp.getFirstName() + "@abc.com");
+
 		EmpAddressEntity empAdd = new EmpAddressEntity();
 		empAdd.setCity(emp.getEmployeeAddress().getCity());
 		empAdd.setCounty(emp.getEmployeeAddress().getCounty());
 		empAdd.setState(emp.getEmployeeAddress().getState());
 		empAdd.setEmpEnitity(empEntity);
-		
+
 		empEntity.setAddressEntity(empAdd);
-		
-		int empId = (int) session.save(empEntity);
-		
-		return empId;
+
+		return (int) session.save(empEntity);
+
 	}
-	
-	public int updateEmployeesAndAddress(Employee emp) {
-		Session session = sessionFactory.getCurrentSession();
-		EmployeeEntity empEntity = new EmployeeEntity();
-		empEntity.setEmpId(emp.getEmpId());
-		empEntity.setFirstName(emp.getFirstName());
-		empEntity.setLastName(emp.getLastName());
-		empEntity.setEmail(emp.getFirstName()+"@abc.com");
+
+	public int changeEmpAndAddress(Employee emp) {
+		System.out.println("Inside changeEmpAndAddress");
+		int id = emp.getEmpId();
+		Session session = sessionFactory.openSession();
+		System.out.println("Session: "+session);
+		try {
+		EmployeeEntity empFromDb = (EmployeeEntity) session.get(EmployeeEntity.class, 1002);
 		
-		session.update(empEntity);
+		//List empFromDb =  session.createQuery("FROM EmployeeEntity where empId ="+id).list();
 		
-		return emp.getEmpId();
+		
+		System.out.println("Emp from db: "+empFromDb);
+		}catch(HibernateException h) {
+			h.printStackTrace();
+		}
+		  return 1;
+		
+		
+		
+		
 	}
-	
+
 	public int deleteEmployeesAndAddress(Employee emp) {
 		Session session = sessionFactory.getCurrentSession();
 		EmployeeEntity empEntity = new EmployeeEntity();
 		empEntity.setEmpId(emp.getEmpId());
-		/*
-		 * empEntity.setFirstName(emp.getFirstName());
-		 * empEntity.setLastName(emp.getLastName());
-		 * empEntity.setEmail(emp.getFirstName()+"@abc.com");
-		 */
-		
+
+		empEntity.setFirstName(emp.getFirstName());
+		empEntity.setLastName(emp.getLastName());
+		empEntity.setEmail(emp.getFirstName() + "@abc.com");
+
+		EmpAddressEntity empAdd = new EmpAddressEntity();
+		empAdd.setCity(emp.getEmployeeAddress().getCity());
+		empAdd.setCounty(emp.getEmployeeAddress().getCounty());
+		empAdd.setState(emp.getEmployeeAddress().getState());
+		empAdd.setEmpEnitity(empEntity);
+
+		empEntity.setAddressEntity(empAdd);
+
 		session.delete(empEntity);
-		
+
 		return emp.getEmpId();
 	}
 
@@ -382,27 +406,27 @@ public class EmployeeDAO implements UserDetailsService {
 		Session session = sessionFactory.getCurrentSession();
 
 		Criteria criteria = session.createCriteria(EmployeeEntity.class);
-		//Criteria : First Name starts with "" AND emp Id <=1003
-		
-		  criteria.add(Restrictions.ilike("firstName", startsWith+"%"));
-		  criteria.add(Restrictions.le("empId", 1005));
-		 
-		//Criteria : First Name Starts with between A and ""
-		//	criteria.add(Restrictions.between("firstName", "A", startsWith));
-		
-		//Criteria : First Name starts with "" OR emp Id <=1003
-		//criteria.add(Restrictions.or(Restrictions.ilike("firstName", startsWith+"%"), Restrictions.le("empId", 1003)));
-		
-		  
-		  //Criteria Order desc
-		  criteria.addOrder(Order.asc("firstName"));
-		  
-		  //Add Projections for getting unique first name - It just gives Count
-		//  criteria.setProjection(Projections.countDistinct("firstName"));
+		// Criteria : First Name starts with "" AND emp Id <=1003
+
+		criteria.add(Restrictions.ilike("firstName", startsWith + "%"));
+		criteria.add(Restrictions.le("empId", 1005));
+
+		// Criteria : First Name Starts with between A and ""
+		// criteria.add(Restrictions.between("firstName", "A", startsWith));
+
+		// Criteria : First Name starts with "" OR emp Id <=1003
+		// criteria.add(Restrictions.or(Restrictions.ilike("firstName", startsWith+"%"),
+		// Restrictions.le("empId", 1003)));
+
+		// Criteria Order desc
+		criteria.addOrder(Order.asc("firstName"));
+
+		// Add Projections for getting unique first name - It just gives Count
+		// criteria.setProjection(Projections.countDistinct("firstName"));
 		List<EmployeeEntity> employees = criteria.list();
-		
+
 		List<Employee> employeeList = new ArrayList<Employee>();
-		for(EmployeeEntity emp: employees) {
+		for (EmployeeEntity emp : employees) {
 			Employee employee = new Employee();
 			employee.setEmpId(emp.getEmpId());
 			employee.setFirstName(emp.getFirstName());
@@ -411,5 +435,5 @@ public class EmployeeDAO implements UserDetailsService {
 		}
 		return employeeList;
 	}
-	
+
 }
