@@ -1,0 +1,58 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="Suite1" parallel="tests" thread-count="10">
+	<test name="exampletest1">
+		<parameter name="empId" value="1001"></parameter>
+		<groups>
+			<run>
+				<include name="fetchData"></include>
+			</run>
+		</groups>
+		<classes>
+			<class name="org.spring.demo.test.TestEmployeeDP" />
+			<class name="org.spring.demo.test.TestEmployee" />
+		</classes>
+	</test>
+	
+	<test name="exampletest2">
+		<parameter name="empId" value="1002"></parameter>
+		<groups>
+			<run>
+				<include name="fetchData"></include>
+			</run>
+		</groups>
+		<classes>
+			<class name="org.spring.demo.test.TestEmployeeDP" />
+			<class name="org.spring.demo.test.TestEmployee" />
+		</classes>
+	</test>
+	<test name="exampletest3">
+		<parameter name="empId" value="1001"></parameter>
+		<groups>
+			<run>
+				<include name="fetchData"></include>
+			</run>
+		</groups>
+		<classes>
+			<class name="org.spring.demo.test.TestEmployeeDP" />
+			<class name="org.spring.demo.test.TestEmployee" />
+		</classes>
+	</test>
+	
+	<test name="exampletest4">
+		<parameter name="empId" value="1002"></parameter>
+		<groups>
+			<run>
+				<include name="fetchData"></include>
+			</run>
+		</groups>
+		<classes>
+			<class name="org.spring.demo.test.TestEmployeeDP" />
+			<class name="org.spring.demo.test.TestEmployee" />
+		</classes>
+	</test>
+	
+	<!-- <test name = "exampletest2"> <classes> <class name = "org.spring.demo.test.TestEmployeeDP" 
+		/> </classes> </test> -->
+</suite>  

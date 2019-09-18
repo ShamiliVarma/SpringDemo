@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
 import org.arpit.java2blog.bean.Employee;
+import org.arpit.java2blog.bean.Student;
 import org.arpit.java2blog.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -76,7 +77,7 @@ public class EmployeeController {
 	}
 	
 	@RequestMapping(value = "/employees", method = RequestMethod.DELETE)
-	public int deleteEmployee(@RequestBody Employee emp){
+	public boolean deleteEmployee(@RequestBody Employee emp){
 		System.out.println("In EmployeeController :: deleteEmployee");
 		return empService.deleteEmployee(emp);
 	}

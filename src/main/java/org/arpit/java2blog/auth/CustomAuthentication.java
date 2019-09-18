@@ -22,9 +22,9 @@ public class CustomAuthentication implements AuthenticationProvider{
 	
 	@Override
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-
 		String user = authentication.getName();
 		String password = authentication.getCredentials().toString();
+		System.out.println("In CustomAuthentication :: authenticate :: user "+user);
 		
 		boolean authSuccess = false;
 		

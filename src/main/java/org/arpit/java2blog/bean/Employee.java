@@ -1,5 +1,7 @@
 package org.arpit.java2blog.bean;
 
+import java.util.Set;
+
 public class Employee {
 
 	
@@ -7,6 +9,8 @@ public class Employee {
 	private String firstName;
 	private String lastName;
 	private EmployeeAddress employeeAddress;
+	private Set<BankAccount> bankAccounts;
+	private Set<Department> departments;
 	
 	public Employee() {
 		super();
@@ -48,8 +52,23 @@ public class Employee {
 	
 	@Override
 	public String toString() {
-		return "Employee [empId=" + empId + ", firstName=" + firstName + ", lastName=" + lastName + ", employeeAddress="
-				+ employeeAddress + "]";
+		return "Employee [empId=" + empId + ", firstName=" + firstName + ", lastName=" + lastName + "]";
+	}
+
+	public Set<BankAccount> getBankAccounts() {
+		return bankAccounts;
+	}
+
+	public void setBankAccounts(Set<BankAccount> bankAccounts) {
+		this.bankAccounts = bankAccounts;
+	}
+
+	public Set<Department> getDepartments() {
+		return departments;
+	}
+
+	public void setDepartments(Set<Department> departments) {
+		this.departments = departments;
 	}
 	
 }

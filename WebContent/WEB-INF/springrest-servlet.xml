@@ -1,61 +1,114 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
- xmlns:context="http://www.springframework.org/schema/context"
- xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
- xmlns:aop="http://www.springframework.org/schema/aop" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
- xmlns:tx="http://www.springframework.org/schema/tx"
- xsi:schemaLocation=" http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd http://www.springframework.org/schema/context 
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation=" http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd http://www.springframework.org/schema/context 
         http://www.springframework.org/schema/context/spring-context-3.0.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
         http://www.springframework.org/schema/aop 
 	http://www.springframework.org/schema/aop/spring-aop.xsd 
 	http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-4.0.xsd
 	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
 	">
-<import resource="spring-security.xml"/>
-<aop:aspectj-autoproxy/>
- <mvc:annotation-driven/>
-<context:component-scan base-package="org.arpit.java2blog" />
-<bean name="employeeAspect" class="org.arpit.java2blog.aspect.CountryLogAspect" />
-<mvc:default-servlet-handler/>
+	<import resource="spring-security.xml" />
+	<aop:aspectj-autoproxy />
+	<mvc:annotation-driven />
+	<context:component-scan
+		base-package="org.arpit.java2blog" />
+	<bean name="employeeAspect"
+		class="org.arpit.java2blog.aspect.CountryLogAspect" />
+	<mvc:default-servlet-handler />
 
 
-<jdbc:embedded-database id="dataSource"
+	<jdbc:embedded-database id="dataSource"
 		type="H2">
 		<jdbc:script location="classpath:sql/create-table.sql" />
 		<jdbc:script location="classpath:sql/insert-data.sql" />
 	</jdbc:embedded-database>
 
-<!-- JDBC -->
-<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
-	<property name="dataSource" ref="dataSource"></property>
-</bean>
+	<!-- view resolver -->
+	<bean id="viewResolver"
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/views/" />
+		<property name="suffix" value=".html" />
+	</bean>
 
-<!-- Hibernate -->
-	<bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+
+	<!-- JDBC -->
+	<bean id="jdbcTemplate"
+		class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+
+	<!-- Hibernate -->
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
 		<property name="annotatedClasses">
 			<list>
 				<value>org.arpit.java2blog.entity.EmployeeEntity</value>
 				<value>org.arpit.java2blog.entity.EmpAddressEntity</value>
+				<value>org.arpit.java2blog.entity.BankAccountEntity</value>
+				<value>org.arpit.java2blog.entity.DepartmentEntity</value>
+				<value>org.arpit.java2blog.entity.StudentEntity</value>
+				<value>org.arpit.java2blog.entity.FullTimeStudent</value>
+				<value>org.arpit.java2blog.entity.PartTimeStudent</value>
+				<value>org.arpit.java2blog.entity.XDepartment</value>
+				<value>org.arpit.java2blog.entity.SalesDepartment</value>
+				<value>org.arpit.java2blog.entity.SecurityDepartment</value>
 			</list>
 		</property>
 		<property name="hibernateProperties">
 			<props>
 				<prop key="hibernate.connection.driver_class">org.h2.Driver</prop>
 				<prop key="hibernate.dialect">org.hibernate.dialect.H2Dialect</prop>
-				<!--  <prop key="hibernate.current_session_context_class">thread</prop> -->
+				<!-- <prop key="hibernate.current_session_context_class">thread</prop> -->
 				<prop key="hibernate.show_sql">true</prop>
 			</props>
 		</property>
 	</bean>
-	
+
 	<bean id="txManager"
 		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
 		<property name="sessionFactory" ref="sessionFactory"></property>
 	</bean>
-	<tx:annotation-driven transaction-manager="txManager" />
-	
+	<tx:annotation-driven
+		transaction-manager="txManager" />
+
 	<!-- Custom Authentication -->
-<bean id="customAuthentication" class="org.arpit.java2blog.auth.CustomAuthentication"></bean>
-	
-	
+	<bean id="customAuthentication"
+		class="org.arpit.java2blog.auth.CustomAuthentication"></bean>
+
+	<!-- For times when you just need to invoke a method on a specific object -->
+	<bean id="simpleJobDetail"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="myBean" />
+		<property name="targetMethod" value="printMessage" />
+	</bean>
+
+	<!-- Run the job every 2 seconds with initial delay of 1 second -->
+	<bean id="simpleTrigger"
+		class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">
+		<property name="jobDetail" ref="simpleJobDetail" />
+		<property name="startDelay" value="1000" />
+		<property name="repeatInterval" value="20000" />
+	</bean>
+	<!-- Scheduler factory bean to glue together jobDetails and triggers to 
+		Configure Quartz Scheduler -->
+	<bean
+		class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="jobDetails">
+			<list>
+				<ref bean="simpleJobDetail" />
+			</list>
+		</property>
+
+		<property name="triggers">
+			<list>
+				<ref bean="simpleTrigger" />
+			</list>
+		</property>
+	</bean>
 </beans>

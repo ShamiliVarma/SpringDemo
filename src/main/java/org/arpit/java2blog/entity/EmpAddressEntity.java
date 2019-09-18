@@ -59,11 +59,4 @@ public class EmpAddressEntity {
 	public void setId(int id) {
 		this.id = id;
 	}
-	@Override
-	public String toString() {
-		return "EmpAddressEntity [id=" + id + ", empEnitity=" + empEnitity + ", county=" + county + ", city=" + city
-				+ ", state=" + state + "]";
-	}
-	
-	
 }

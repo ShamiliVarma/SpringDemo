@@ -8,12 +8,24 @@
   <name>AngularjsSpringRestExample Maven Webapp</name>
   <url>http://maven.apache.org</url>
   <dependencies>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>3.8.1</version>
-      <scope>test</scope>
-    </dependency>
+	<dependency>
+		<groupId>org.testng</groupId>
+		<artifactId>testng</artifactId>
+		<version>${testng.version}</version>
+		<scope>test</scope>
+	</dependency>
+	<dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+	<dependency>
+	<groupId>org.mockito</groupId>
+			<artifactId>mockito-all</artifactId>
+			<version>1.10.19</version>
+			<scope>test</scope>
+	
+	</dependency>
     <dependency>
    <groupId>javax.servlet</groupId>
    <artifactId>javax.servlet-api</artifactId>
@@ -115,31 +127,52 @@
 			<artifactId>hibernate-core</artifactId>
 			<version>${hibernate.version}</version>
 		</dependency>
-        
+        <!-- Quartz framework -->
+        <dependency>
+            <groupId>org.quartz-scheduler</groupId>
+            <artifactId>quartz</artifactId>
+            <version>${quartz.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context-support</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
  </dependencies>
  <build>
   <finalName>AngularjsSpringRestExample</finalName>
  
   <plugins>
-    <plugin>
-    <groupId>org.apache.maven.plugins</groupId>
-    <artifactId>maven-compiler-plugin</artifactId>
-    <version>3.2</version>
-    <configuration>
-     <source>${jdk.version}</source>
-     <target>${jdk.version}</target>
-    </configuration>
-   </plugin>
-   <plugin>
-			<groupId>org.apache.maven.plugins</groupId>
-			<artifactId>maven-war-plugin</artifactId>
-			<version>2.6</version>
-			<configuration>
+	<plugin>
+		<groupId>org.apache.maven.plugins</groupId>
+		<artifactId>maven-compiler-plugin</artifactId>
+		<version>3.2</version>
+		<configuration>
+			<source>${jdk.version}</source>
+			<target>${jdk.version}</target>
+		</configuration>
+	</plugin>
+	<plugin>
+		<groupId>org.apache.maven.plugins</groupId>
+		<artifactId>maven-war-plugin</artifactId>
+		<version>2.6</version>
+		<configuration>
 			<warSourceDirectory>WebContent</warSourceDirectory>
-				<failOnMissingWebXml>false</failOnMissingWebXml>
-			</configuration>
-		</plugin>
-  </plugins>
+			<failOnMissingWebXml>false</failOnMissingWebXml>
+		</configuration>
+	</plugin>
+	<plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>3.0.0-M3</version>
+        <configuration>
+          <suiteXmlFiles>
+            <suiteXmlFile>src/test/resources/testng.xml</suiteXmlFile>
+            <suiteXmlFile>src/test/resources/testng2.xml</suiteXmlFile>
+          </suiteXmlFiles>
+        </configuration>
+      </plugin>
+</plugins>
  
  </build>
  <properties>
@@ -149,7 +182,8 @@
   <spring.security.version>4.0.1.RELEASE</spring.security.version>
   <log4j.version>1.2.17</log4j.version>
   <hibernate.version>3.6.9.Final</hibernate.version>
-  
+  <testng.version>6.8.7</testng.version>
+   <quartz.version>2.2.1</quartz.version>
  </properties>
   
 </project>
