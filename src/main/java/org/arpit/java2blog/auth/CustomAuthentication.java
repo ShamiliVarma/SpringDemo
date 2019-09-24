@@ -3,6 +3,9 @@ package org.arpit.java2blog.auth;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.arpit.java2blog.bean.User;
 import org.arpit.java2blog.service.MyUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +23,9 @@ public class CustomAuthentication implements AuthenticationProvider{
 	@Autowired
 	private MyUserDetailsService userDetailsService;
 	
+	/*
+	 * @Autowired HttpServletRequest httpReq;
+	 */
 	@Override
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
 		String user = authentication.getName();
@@ -46,6 +52,12 @@ public class CustomAuthentication implements AuthenticationProvider{
 		grantedList.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
 		
 		Authentication auth = new UsernamePasswordAuthenticationToken(user, password, grantedList);
+		
+		/*
+		 * HttpSession session = httpReq.getSession(); session.setAttribute("name",
+		 * authentication.getName());
+		 * System.out.println("Http name :: "+session.getAttribute("name"));
+		 */
 		
 		return auth;
 	}

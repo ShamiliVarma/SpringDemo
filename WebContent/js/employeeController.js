@@ -2,7 +2,7 @@ var app= angular.module("EmployeeManagement",[]);
 
 
 
-app.controller("EmployeeController", function($scope, $http) {
+app.controller("EmployeeController", function($scope, $http, $location) {
 
 	$scope.employees = [];
 	$scope.employeeForm = {
@@ -106,6 +106,18 @@ app.controller("EmployeeController", function($scope, $http) {
 		$scope.employeeForm.departments.push(department);
 
 	};
+	
+	$scope.logout = function(){
+		console.log("In logout")
+		$http({
+			method : 'GET',
+			url : '/AngularjsSpringRestExample/logout'
+		}).then(function logoutSuccess(response){
+			
+			$location.path('/AngularjsSpringRestExample/login');
+		});
+	};
+	
 	/* Private Methods */
 //	HTTP GET- get all Employees collection
 	function _refreshEmployeesData() {
